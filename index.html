@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head> 
+    <meta charset="UTF-8"> 
+    <link rel="stylesheet" href="style.css">
+    <title>Computação gráfica</title> 
+  </head>
+  <body>
+    <main>
+      <h1 class="title">Trabalho de computação gráfica<hr><small>Antônio Moreira</small></h1>
+      
+      
+      <!-- All the buttons -->
+      <div class="wrapper">
+        <button id="bezier" class="opt-button" onclick="buttonBezier()">Beziér</button>
+        <button id="circle" class="opt-button" onclick="buttonCircle()">Circle</button>
+        <button id="polygon" class="opt-button" onclick="buttonPolygon()">Polygon</button>
+        
+        <button id="line" class="opt-button" onclick="buttonLine()">Line</button>
+        <!-- Ok! -->
+        <button id="reset" class="opt-button" onclick="clear()">Reset</button>
+      </div>
+
+      </br>
+
+      <!-- Where the magic happens -->
+      <canvas id="canvas"></canvas>
+
+    </main>
+    <!-- Contains all functions that execute at buttons-->
+    <script src="canvas.js"></script>
+  </body>
+</html>
