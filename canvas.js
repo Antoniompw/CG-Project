@@ -58,7 +58,7 @@ function register(){
 	if(points.length > 1){
 		objects[mode].push(points);
 	}
-	console.log("Pushing"+mode);
+	console.log("Pushing "+mode);
 	points = [];
 	mode = "None";
 	renderObjects();
@@ -108,10 +108,23 @@ function renderObjects(){
 			});
 		}
 	}
+	if(mode == "Line" && points.length){
+		renderLine(points);
+	}
+	if(mode == "Polygon"){
+		renderPolygon(points);
+	}
+	if(mode == "Bezier"){
+		renderBezier(points);
+	}
+	if(mode == "Circle"){
+		renderCircle(points);
+	}
+
 }
 
 function renderLine(line){
-	if(line.length < 1){
+	if(line.length < 2){
 		return;
 	}
 	x1 = line[0][0];
@@ -132,7 +145,7 @@ function getRadius(x1, y1, x2, y2){
 }
 
 function renderCircle(circle){
-	if(circle.length < 1){
+	if(circle.length < 2){
 		return;
 	}
 	x1 = circle[0][0];
@@ -149,9 +162,41 @@ function renderPolygon(polygon){
 	if(polygon.length < 1){
 		return;
 	}
+	ctx.beginPath();
+	// First point
+	a = polygon[0]
+	// First coodinates
+	x1 = a[0];
+	y1 = a[1];
+	ctx.moveTo(x1, y1);
+	polygon.forEach(point => {
+		x = point[0];
+		y = point[1];
+		ctx.lineTo(x, y);
+	})
+	ctx.closePath();
+	ctx.stroke();
 }
 function renderBezier(bezier){
-	if(bezier.length < 1){
+	if(bezier.length != 4){
 		return;
 	}
+	ctx.beginPath();
+	// First point
+	a = bezier[0];
+	b = bezier[1];
+	c = bezier[2];
+	d = bezier[3];
+	// First coodinates
+	x1 = a[0];
+	y1 = a[1];
+	x2 = b[0];
+	y2 = b[1];
+	x3 = c[0];
+	y3 = c[0];
+	x4 = d[0];
+	y4 = d[1];
+	ctx.moveTo(x1, y1);
+	ctx.bezierCurveTo(x1, y1, x2, y2, x3, y3, x4, y4);
+	ctx.stroke();
 }
