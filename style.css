@@ -1,8 +1,6 @@
 #canvas{
-	height: 300px;
-	width: 100%;
-	margin-top: 10px;
-	border: 1px solid black;
+	box-shadow: 0px 0px 4px 0px #666;
+  cursor: crosshair;
 }
 .wrapper{
 	display: inline-flex;
