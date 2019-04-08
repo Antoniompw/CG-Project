@@ -5,10 +5,10 @@ var ctx = canvas.getContext("2d");
 var points = [];
 // Beings to render after
 var objects = {"Line" : [], "Bezier" : [], "Circle" : [], "Polygon" : [], "None" : []};
-// How thick
+// Initial mode
 let mode = "None";
 
-// Registers left mouse clicks
+// Registers left mouse clicks and execute function mouseLeftClick
 document.getElementById('canvas').addEventListener('click', mouseLeftClick, false);
 
 // Clears canvas board
@@ -20,7 +20,7 @@ function clearBoard(){
 }
 
 // Registers what is draw at time
-// Stacks at dict and resets current drawing points
+// HOW => Stacks at dict and resets current drawing points
 function register(){
 	// If there are points to be stacked, stack
 	if(points.length > 1){
