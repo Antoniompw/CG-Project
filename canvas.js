@@ -22,11 +22,15 @@ function clearBoard(){
 // Registers what is draw at time
 // Stacks at dict and resets current drawing points
 function register(){
+	// If there are points to be stacked, stack
 	if(points.length > 1){
 		objects[mode].push(points);
 	}
+	// Notifies the user something is being registered
 	console.log("Pushing "+mode);
+	// Trow out points
 	points = [];
+	// Become neutral
 	mode = "None";
 }
 
@@ -37,22 +41,18 @@ function modeBezier(){
 	register();
 	mode = "Bezier";
 }
-
 function modeLine(){
 	register();
 	mode = "Line";
 }
-
 function modeCircle(){
 	register();
 	mode = "Circle";
 }
-
 function modePolygon(){
 	register();
 	mode = "Polygon";
 }
-
 
 // Function that reads all registers
 // Renders everything contained at the main dictionary
@@ -81,12 +81,16 @@ function renderObjects(){
 				renderBezier(bezier);
 			});
 		}
+		// If collection of Polygon's
 		if(key == "Polygon"){
+			// Render each Polygon
 			objects[key].forEach(polygon => {
 				renderPolygon(polygon);
 			});
 		}
 	}
+	// Those "if's" statements are meant to draw all that is currently held by points
+	// What is currently being draw
 	if(mode == "Line" && points.length){
 		renderLine(points);
 	}
@@ -190,18 +194,13 @@ function renderBezier(bezier){
 	ctx.stroke();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// If following mouse
+/*
+BY THIS LINE AND FORTH ALL THE LOGIC
+IS MEANT TO HANDLE CLICKS AND SELECT
+ION OF POINTS
+*/
+// Auxiliary flag
+// Activated if point is meant to follow mouse
 let fixed = true;
 
 // Every time someone clicks the canvas
