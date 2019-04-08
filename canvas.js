@@ -11,7 +11,6 @@ let mode = "None";
 // Registers left mouse clicks
 document.getElementById('canvas').addEventListener('click', mouseLeftClick, false);
 
-
 // Clears canvas board
 function clearBoard(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -20,40 +19,8 @@ function clearBoard(){
   objects = {"Line" : [], "Bezier" : [], "Circle" : [], "Polygon" : []};
 }
 
-// All the pollowing functions follow the same principle
-// Change the draw mode
-function modeBezier(){
-	if(points.length > 1){
-		objects[mode].push(points);
-	}
-	mode = "Bezier";
-	points = [];
-}
-
-function modeLine(){
-	if(points.length > 1){
-		objects[mode].push(points);
-	}
-	mode = "Line";
-	points = [];
-}
-
-function modeCircle(){
-	if(points.length > 1){
-		objects[mode].push(points);
-	}
-	mode = "Circle";
-	points = [];
-}
-
-function modePolygon(){
-	if(points.length > 1){
-		objects[mode].push(points);
-	}
-	mode = "Polygon";
-	points = [];
-}
-
+// Registers what is draw at time
+// Stacks at dict and resets current drawing points
 function register(){
 	if(points.length > 1){
 		objects[mode].push(points);
@@ -61,23 +28,35 @@ function register(){
 	console.log("Pushing "+mode);
 	points = [];
 	mode = "None";
-	renderObjects();
 }
 
-function mouseLeftClick(event){
-	// If there is a draw mode, stack the points
-	if(mode != "None"){
-		var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
-		points.push([x,y]);
-		console.log("X:"+x+", Y:"+y+", Mode:"+mode);
-	}
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	renderObjects();
+// All the pollowing functions follow the same principle
+// Register what has been already draw
+// Change drawing mode
+function modeBezier(){
+	register();
+	mode = "Bezier";
 }
+
+function modeLine(){
+	register();
+	mode = "Line";
+}
+
+function modeCircle(){
+	register();
+	mode = "Circle";
+}
+
+function modePolygon(){
+	register();
+	mode = "Polygon";
+}
+
 
 // Function that reads all registers
+// Renders everything contained at the main dictionary
+// After, renders what is currently being draw
 function renderObjects(){
 	// Flow through keys
 	for(var key in objects){
@@ -123,6 +102,8 @@ function renderObjects(){
 
 }
 
+// Receives series of coordinates and renders a line
+// Only if possible
 function renderLine(line){
 	if(line.length < 2){
 		return;
@@ -137,6 +118,7 @@ function renderLine(line){
 	ctx.stroke();
 }
 
+// Fine method to get distance between two points
 function getRadius(x1, y1, x2, y2){
 	var a = x1 - x2;
 	var b = y1 - y2;
@@ -144,6 +126,8 @@ function getRadius(x1, y1, x2, y2){
 	return c;
 }
 
+// Receives series of coordinates and renders a circle
+// Only if possible
 function renderCircle(circle){
 	if(circle.length < 2){
 		return;
@@ -158,6 +142,8 @@ function renderCircle(circle){
 	ctx.stroke();
 }
 
+// Receives series of coordinates and renders a polygon
+// Only if possible
 function renderPolygon(polygon){
 	if(polygon.length < 1){
 		return;
@@ -177,6 +163,9 @@ function renderPolygon(polygon){
 	ctx.closePath();
 	ctx.stroke();
 }
+
+// Receives series of coordinates and renders a bezier curve
+// Only if possible
 function renderBezier(bezier){
 	if(bezier.length != 4){
 		return;
@@ -193,10 +182,43 @@ function renderBezier(bezier){
 	x2 = b[0];
 	y2 = b[1];
 	x3 = c[0];
-	y3 = c[0];
+	y3 = c[1];
 	x4 = d[0];
 	y4 = d[1];
 	ctx.moveTo(x1, y1);
 	ctx.bezierCurveTo(x1, y1, x2, y2, x3, y3, x4, y4);
 	ctx.stroke();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// If following mouse
+let fixed = true;
+
+// Every time someone clicks the canvas
+function mouseLeftClick(event){
+	// If there is a draw mode, stack the points
+	if(mode != "None"){
+		var rect = canvas.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+		points.push([x,y]);
+		console.log("X:"+x+", Y:"+y+", Mode:"+mode);
+		return;
+	}
+}
+
+// Clears canvas and renders it's objects over again
+setInterval(function(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	renderObjects();
+}, 30);
