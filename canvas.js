@@ -26,7 +26,7 @@ function register(){
 	if(points.length > 1){
 		objects[mode].push(points);
 	}
-	// Notifies the user something is being registered
+	// Notifies the user that something is being registered
 	console.log("Pushing "+mode);
 	// Trow out points
 	points = [];
