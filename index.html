@@ -18,15 +18,38 @@
         <button id="polygon" class="opt-button" onclick="modePolygon()">Polygon</button>
         <button id="line" class="opt-button" onclick="modeLine()">Line</button>
         <button id="Register" class="opt-button" onclick="register()">Register</button>
+        <button id="Pick" class="opt-button" onclick="modePick()">Pick</button>
         
         <!-- Ok! -->
         <button id="reset" class="opt-button" onclick="clearBoard()">Reset</button>
       </div>
 
       </br>
-
       <!-- Where the magic happens -->
-      <canvas id="canvas"></canvas>
+      <canvas id="canvas" width="500" height="500" onmousemove="mousePosition(event)"></canvas>
+      </br>
+
+      <!--Geometrical transforms-->
+      <button id="Rotate" class="opt-button" onclick="rotateMode()">Rotate</button>
+      Clock-wise rotation (Degrees °) <input id="theta" type="number" min="0" max="360"></input>
+      </br>
+      
+      <button id="Scale" class="opt-button" onclick="scaleMode()">Scale</button>
+      X-Scale Factor: <input id="x-factor" type="number" min="0"></input>
+      Y-Scale Factor: <input id="y-factor" type="number" min="0"></input>
+      </br>
+      
+      <button id="Translate" class="opt-button" onclick="translateMode()">Translate</button>
+      X: <input id="x_offset" type="number" min="0"></input>
+      Y: <input id="y_offset" type="number" min="0"></input>
+      </br>
+
+      <!-- Still don't know how to deal with this one-->
+      <button id="Mirror" class="opt-button" onclick="mirrorMode()">Mirror</button>
+      <select id="axis">
+        <option value = "x">X</option>
+        <option value = "y">Y</option>
+      </select>
 
     </main>
     <!-- Contains all functions that execute at buttons-->

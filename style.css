@@ -14,6 +14,8 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin-right: 5 px;
+  margin-bottom: 10 px;
 }
 .opt-button:hover{
 	background-color: #e7e7e7; /* Gray */
